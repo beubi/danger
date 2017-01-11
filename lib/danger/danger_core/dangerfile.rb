@@ -244,6 +244,10 @@ module Danger
     def post_results(danger_id, new_comment)
       violations = violation_report
 
+      if violations[:errors].empty? && violations[:warnings].empty?
+        return nil
+      end
+      
       env.request_source.update_pull_request!(
         warnings: violations[:warnings],
         errors: violations[:errors],
