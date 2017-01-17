@@ -80,7 +80,7 @@ module Danger
 
       def delete_old_comments(danger_id: "danger")
         @api.fetch_last_comments.each do |c|
-          @api.delete_comment(c[:id]) if c[:content][:raw] =~ /everything is fixable/ || c[:content][:raw] =~ /All is green/
+          @api.delete_comment(c[:id]) if c[:content][:raw] =~ /everything is fixable/ || c[:content][:raw] =~ /All green/
         end
       end
     end
