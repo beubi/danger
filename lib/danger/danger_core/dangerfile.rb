@@ -244,7 +244,7 @@ module Danger
     def post_results(danger_id, new_comment)
       violations = violation_report
 
-      if violations[:errors].empty? && violations[:warnings].empty?
+      if violations[:errors].empty? && violations[:warnings].empty? && violations[:messages].empty?
         return nil
       end
       
