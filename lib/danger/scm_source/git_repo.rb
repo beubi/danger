@@ -47,7 +47,7 @@ module Danger
     private
 
     def git_in_depth_fetch
-      exec("fetch --update-shallow")
+      exec("fetch --depth 1000000")
     end
 
     def default_env
