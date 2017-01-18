@@ -55,7 +55,7 @@ module Danger
     end
 
     def raise_if_we_cannot_find_the_commit(commitish)
-      raise "Commit #{commitish[0..7]} doesn't exist. Are you running `danger local/pr` against the correct repository? Also this usually happens when you rebase/reset and force-pushed."
+      puts "Commit #{commitish[0..7]} doesn't exist. Are you running `danger local/pr` against the correct repository? Also this usually happens when you rebase/reset and force-pushed."
     end
 
     def commit_exists?(sha1)
