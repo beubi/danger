@@ -47,7 +47,10 @@ module Danger
       def setup_danger_branches
         base_commit = self.pr_json[:destination][:commit][:hash]
         head_commit = self.pr_json[:source][:commit][:hash]
-
+        
+        puts "base_commit: #{base_commit}"
+        puts "head_commit: #{head_commit}"
+        
         # Next, we want to ensure that we have a version of the current branch at a known location
         scm.ensure_commitish_exists! base_commit
         self.scm.exec "branch #{EnvironmentManager.danger_base_branch} #{base_commit}"
