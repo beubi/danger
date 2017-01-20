@@ -13,8 +13,8 @@ module Danger
       puts "=== @GITREPO from: #{from}"
       puts "=== @GITREPO to: #{to}"
       
-      #ensure_commitish_exists!(from)
-      #ensure_commitish_exists!(to)
+      puts ensure_commitish_exists!(from)
+      puts ensure_commitish_exists!(to)
 
       merge_base = find_merge_base(repo, from, to)
       
@@ -45,17 +45,17 @@ module Danger
       
       puts "=== @GITREPO commitish: #{commitish}"
 
-      git_shallow_fetch if commit_not_exists?(commitish)
+      #git_shallow_fetch if commit_not_exists?(commitish)
 
-      if commit_not_exists?(commitish)
-        raise_if_we_cannot_find_the_commit(commitish)
-      end
+      #if commit_not_exists?(commitish)
+      #  raise_if_we_cannot_find_the_commit(commitish)
+      #end
     end
 
     private
 
     def git_shallow_fetch
-      exec("fetch --unshallow")
+      #exec("fetch --unshallow")
     end
 
     def default_env
@@ -72,7 +72,7 @@ module Danger
 
     def commit_not_exists?(sha1)
       puts "=== @GITREPO commit_not_exists?: #{sha1}"
-      exec("rev-parse --verify #{sha1}^{commit}").empty?
+      #exec("rev-parse --verify #{sha1}^{commit}").empty?
     end
 
     def find_merge_base(repo, from, to)
