@@ -50,7 +50,7 @@ module Danger
     private
 
     def git_shallow_fetch
-      exec("fetch --unshallow")
+      exec("fetch") # before was fetch --unshallow
     end
 
     def default_env
