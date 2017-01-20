@@ -62,6 +62,9 @@ module Danger
       ].concat(super)
     end
 
+    puts "=== @RUNNER base: #{base}"
+    puts "=== @RUNNER head: #{head}"
+    
     def run
       Executor.new(ENV).run(
         base: @base,
