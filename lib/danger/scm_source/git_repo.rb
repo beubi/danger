@@ -42,6 +42,9 @@ module Danger
     end
 
     def ensure_commitish_exists!(commitish)
+      
+      puts "=== @GITREPO commitish: #{commitish}"
+
       git_in_depth_fetch if commit_not_exists?(commitish)
 
       if commit_not_exists?(commitish)
