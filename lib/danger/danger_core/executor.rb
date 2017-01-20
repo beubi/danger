@@ -23,9 +23,6 @@ module Danger
       env ||= EnvironmentManager.new(system_env, cork)
       dm ||= Dangerfile.new(env, cork)
       
-      puts "=== @EXECUTOR base: #{base}"
-      puts "=== @EXECUTOR head: #{head}"
-      
       ran_status = begin
         dm.run(
           base_branch(base),
