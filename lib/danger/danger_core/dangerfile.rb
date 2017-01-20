@@ -259,6 +259,10 @@ module Danger
     end
 
     def setup_for_running(base_branch, head_branch)
+      
+      puts "=== @DANGERFILE base: #{base_branch}"
+      puts "=== @DANGERFILE head: #{head_branch}"
+      
       env.ensure_danger_branches_are_setup
       env.scm.diff_for_folder(".".freeze, from: base_branch, to: head_branch)
     end
