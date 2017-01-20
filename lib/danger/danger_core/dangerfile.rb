@@ -264,6 +264,10 @@ module Danger
     end
 
     def run(base_branch, head_branch, dangerfile_path, danger_id, new_comment)
+      
+      puts "=== @DANGERFILE base: #{base_branch}"
+      puts "=== @DANGERFILE head: #{head_branch}"
+      
       # Setup internal state
       init_plugins
       env.fill_environment_vars
