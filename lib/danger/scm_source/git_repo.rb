@@ -27,7 +27,7 @@ module Danger
     def exec(string)
       require "open3"
       Dir.chdir(self.folder || ".") do
-        puts "=== GITCOMMAND: git #{string}"
+        puts "~~> GITCOMMAND: git #{string}"
         Open3.popen2(default_env, "git #{string}") do |_stdin, stdout, _wait_thr|
           stdout.read.rstrip
         end
