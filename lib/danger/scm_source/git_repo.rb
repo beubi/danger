@@ -10,15 +10,15 @@ module Danger
       self.folder = folder
       repo = Git.open self.folder
       
-      puts "===== from: #{from}"
-      puts "===== to: #{to}"
+      puts "=== @GITREPO from: #{from}"
+      puts "=== @GITREPO to: #{to}"
       
       ensure_commitish_exists!(from)
       ensure_commitish_exists!(to)
 
       merge_base = find_merge_base(repo, from, to)
       
-      puts "===== merge_base: #{merge_base}"
+      puts "=== @GITREPO merge_base: #{merge_base}"
 
       self.diff = repo.diff(merge_base, to)
       self.log = repo.log.between(from, to)
@@ -71,18 +71,24 @@ module Danger
     end
 
     def commit_not_exists?(sha1)
-      puts "===== commit_not_exists?: #{sha1}"
+      puts "=== @GITREPO commit_not_exists?: #{sha1}"
       exec("rev-parse --verify #{sha1}^{commit}").empty?
     end
 
     def find_merge_base(repo, from, to)
       possible_merge_base = possible_merge_base(repo, from, to)
 
+      puts "=== @GITREPO repo: #{repo}"
+      puts "=== @GITREPO from: #{from}"
+      puts "=== @GITREPO to: #{to}"
+      
       unless possible_merge_base
         git_in_depth_fetch
         possible_merge_base = possible_merge_base(repo, from, to)
       end
 
+      puts "=== @GITREPO possible_merge_base: #{possible_merge_base}"
+      
       raise "Cannot find a merge base between #{from} and #{to}." unless possible_merge_base
 
       possible_merge_base
@@ -99,9 +105,9 @@ module Git
     # Use git-merge-base https://git-scm.com/docs/git-merge-base to
     # find as good common ancestors as possible for a merge
     def merge_base(commit1, commit2, *other_commits)
-      puts "===== commit1: #{commit1}"
-      puts "===== commit2: #{commit2}"
-      puts "===== other_commits: #{other_commits}"
+      puts "=== @GITREPO commit1: #{commit1}"
+      puts "=== @GITREPO commit2: #{commit2}"
+      puts "=== @GITREPO other_commits: #{other_commits}"
       Open3.popen2("git", "merge-base", "--all", commit1, commit2, *other_commits) { |_stdin, stdout, _wait_thr| stdout.read.rstrip }
     end
   end
