@@ -59,6 +59,9 @@ module Danger
 
     def clean_up
       [EnvironmentManager.danger_base_branch, EnvironmentManager.danger_head_branch].each do |branch|
+        
+        puts "=== @ENVMANAGER branch: #{branch}"
+        
         scm.exec("branch -D #{branch}") unless scm.exec("rev-parse --quiet --verify #{branch}").empty?
       end
     end
