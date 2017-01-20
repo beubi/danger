@@ -62,7 +62,7 @@ module Danger
         
         puts "=== @ENVMANAGER branch: #{branch}"
         
-        scm.exec("branch -D #{branch}") unless scm.exec("rev-parse --quiet --verify #{branch}").empty?
+        scm.exec("branch -D #{branch}") unless scm.exec("rev-parse --verify #{branch}").empty?
       end
     end
 
