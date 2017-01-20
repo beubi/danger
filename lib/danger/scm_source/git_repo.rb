@@ -38,7 +38,7 @@ module Danger
     end
 
     def origins
-      exec("remote show origin").lines.grep(/Fetch URL/)[0].split(": ", 2)[1].chomp
+      exec("remote show origin").lines.grep(/Fetch URL/)[0]
     end
 
     def ensure_commitish_exists!(commitish)
