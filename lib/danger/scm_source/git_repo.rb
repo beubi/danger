@@ -13,8 +13,8 @@ module Danger
       puts "=== @GITREPO from: #{from}"
       puts "=== @GITREPO to: #{to}"
       
-      ensure_commitish_exists!(from)
-      ensure_commitish_exists!(to)
+      #ensure_commitish_exists!(from)
+      #ensure_commitish_exists!(to)
 
       merge_base = find_merge_base(repo, from, to)
       
