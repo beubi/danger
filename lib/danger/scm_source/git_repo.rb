@@ -10,15 +10,15 @@ module Danger
       self.folder = folder
       repo = Git.open self.folder
       
-      puts "===== from: #{from}"
-      puts "===== to: #{to}"
+      print "===== from: #{from}"
+      print "===== to: #{to}"
       
       ensure_commitish_exists!(from)
       ensure_commitish_exists!(to)
 
       merge_base = find_merge_base(repo, from, to)
       
-      puts "===== merge_base: #{merge_base}"
+      print "===== merge_base: #{merge_base}"
 
       self.diff = repo.diff(merge_base, to)
       self.log = repo.log.between(from, to)
@@ -68,6 +68,7 @@ module Danger
     end
 
     def commit_not_exists?(sha1)
+      print "===== commit_not_exists?"
       exec("rev-parse --verify #{sha1}^{commit}").empty?
     end
 
@@ -95,9 +96,9 @@ module Git
     # Use git-merge-base https://git-scm.com/docs/git-merge-base to
     # find as good common ancestors as possible for a merge
     def merge_base(commit1, commit2, *other_commits)
-      puts "===== commit1: #{commit1}"
-      puts "===== commit2: #{commit2}"
-      puts "===== other_commits: #{other_commits}"
+      print "===== commit1: #{commit1}"
+      print "===== commit2: #{commit2}"
+      print "===== other_commits: #{other_commits}"
       Open3.popen2("git", "merge-base", "--all", commit1, commit2, *other_commits) { |_stdin, stdout, _wait_thr| stdout.read.rstrip }
     end
   end
