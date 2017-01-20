@@ -27,6 +27,7 @@ module Danger
     def exec(string)
       require "open3"
       Dir.chdir(self.folder || ".") do
+        puts "=== GITCOMMAND: git #{string}"
         Open3.popen2(default_env, "git #{string}") do |_stdin, stdout, _wait_thr|
           stdout.read.rstrip
         end
@@ -34,7 +35,7 @@ module Danger
     end
 
     def head_commit
-      exec("rev-parse --verify HEAD")
+      exec("rev-parse HEAD")
     end
 
     def origins
@@ -43,7 +44,7 @@ module Danger
 
     def ensure_commitish_exists!(commitish)
       
-      puts "=== @GITREPO commitish: #{commitish}"
+      puts "=== @GITREPO ensure_commitish_exists!: #{commitish}"
 
       git_shallow_fetch if commit_not_exists?(commitish)
 
