@@ -73,7 +73,7 @@ module Danger
 
     def commit_not_exists?(sha1)
       puts "=== @GITREPO commit_not_exists?: #{sha1}"
-      exec("rev-parse --verify #{sha1}^{commit}").empty?
+      exec("rev-parse --verify #{sha1}").empty?
     end
 
     def find_merge_base(repo, from, to)
