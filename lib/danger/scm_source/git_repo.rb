@@ -6,7 +6,7 @@ module Danger
   class GitRepo
     attr_accessor :diff, :log, :folder
 
-    def diff_for_folder(folder, from: "master", to: "HEAD")
+    def diff_for_folder(folder, from: "develop", to: "HEAD")
       self.folder = folder
       repo = Git.open self.folder
       
@@ -34,11 +34,11 @@ module Danger
     end
 
     def head_commit
-      exec("rev-parse HEAD")
+      exec("rev-parse --verify HEAD")
     end
 
     def origins
-      exec("remote show origin").lines.grep(/Fetch URL/)[0]
+      exec("remote show origin -n").lines.grep(/Fetch URL/)[0].split(": ", 2)[1].chomp
     end
 
     def ensure_commitish_exists!(commitish)
