@@ -6,3 +6,12 @@
     <%- end -%>
   <%- end -%>
 <%- end -%>
+
+<%- @tables.each do |table| -%>
+  <%- if table[:content].any? || table[:resolved].any? -%>
+    > #### table[:count] table[:name]
+    <%- table[:content].each do |violation| -%>
+      > > @emoji_mapper.map(table[:emoji]) violation.message
+    <%- end -%>
+  <%- end -%>
+<%- end -%>
