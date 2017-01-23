@@ -53,7 +53,7 @@ module Danger
       puts "repo: #{repo}"
       puts "from: #{from}"
       puts "to: #{to}"
-      exec("fetch origin/develop) # before was fetch --unshallow
+      exec("fetch origin/develop") # before was fetch --unshallow
     end
 
     def default_env
