@@ -10,8 +10,8 @@ module Danger
       self.folder = folder
       repo = Git.open self.folder
       
-      ensure_commitish_exists!(from)
-      ensure_commitish_exists!(to)
+      ensure_commitish_exists!(repo, from, to)
+      ensure_commitish_exists!(repo, from, to)
 
       merge_base = find_merge_base(repo, from, to)
 
