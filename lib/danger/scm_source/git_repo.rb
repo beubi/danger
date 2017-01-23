@@ -36,7 +36,7 @@ module Danger
       exec("remote show origin -n").lines.grep(/Fetch URL/)[0].split(": ", 2)[1].chomp
     end
 
-    def ensure_commitish_exists!(commitish)
+    def ensure_commitish_exists!(commitish, repo)
       git_shallow_fetch(repo) if commit_not_exists?(commitish)
 
       if commit_not_exists?(commitish)
