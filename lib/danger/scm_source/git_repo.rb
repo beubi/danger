@@ -10,10 +10,8 @@ module Danger
       self.folder = folder
       repo = Git.open self.folder
       
-      commitish = from
-      ensure_commitish_exists!(commitish, repo, from, to)
-      commitish = to
-      ensure_commitish_exists!(commitish, repo, from, to)
+      ensure_commitish_exists!(from, repo)
+      ensure_commitish_exists!(to, repo)
 
       merge_base = find_merge_base(repo, from, to)
 
@@ -24,9 +22,6 @@ module Danger
     def exec(string)
       require "open3"
       Dir.chdir(self.folder || ".") do
-        
-        puts "~~> GITCOMMAND: git #{string}"
-        
         Open3.popen2(default_env, "git #{string}") do |_stdin, stdout, _wait_thr|
           stdout.read.rstrip
         end
@@ -41,8 +36,8 @@ module Danger
       exec("remote show origin -n").lines.grep(/Fetch URL/)[0].split(": ", 2)[1].chomp
     end
 
-    def ensure_commitish_exists!(commitish, repo, from, to)
-      git_shallow_fetch(repo, from, to) if commit_not_exists?(commitish)
+    def ensure_commitish_exists!(commitish, repo)
+      git_shallow_fetch(repo) if commit_not_exists?(commitish)
 
       if commit_not_exists?(commitish)
         raise_if_we_cannot_find_the_commit(commitish)
@@ -51,7 +46,7 @@ module Danger
 
     private
 
-    def git_shallow_fetch (repo, from, to)
+    def git_shallow_fetch (repo)
       exec("fetch --progress https://${DANGER_BITBUCKETCLOUD_USERNAME}:${DANGER_BITBUCKETCLOUD_PASSWORD}@bitbucket.org/#{repo}.git refs/heads/develop:refs/remotes/origin/develop") # before was 'fetch --unshallow'
     end
 
@@ -75,7 +70,7 @@ module Danger
       possible_merge_base = possible_merge_base(repo, from, to)
       
       unless possible_merge_base
-        git_shallow_fetch(repo, from, to)
+        git_shallow_fetch(repo)
         possible_merge_base = possible_merge_base(repo, from, to)
       end
 
