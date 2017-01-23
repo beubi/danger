@@ -47,7 +47,7 @@ module Danger
     private
 
     def git_shallow_fetch (repo)
-      exec("fetch --progress https://${DANGER_BITBUCKETCLOUD_USERNAME}:${DANGER_BITBUCKETCLOUD_PASSWORD}@bitbucket.org/#{repo}.git refs/heads/develop:refs/remotes/origin/develop") # before was 'fetch --unshallow'
+      exec("fetch https://${DANGER_BITBUCKETCLOUD_USERNAME}:${DANGER_BITBUCKETCLOUD_PASSWORD}@bitbucket.org/#{repo}.git refs/heads/develop:refs/remotes/origin/develop") # before was 'fetch --unshallow'
     end
 
     def default_env
@@ -90,7 +90,6 @@ module Git
     # Use git-merge-base https://git-scm.com/docs/git-merge-base to
     # find as good common ancestors as possible for a merge
     def merge_base(commit1, commit2, *other_commits)
-      puts "git merge-base --all #{commit1} #{commit2}"
       Open3.popen2("git", "merge-base", "--all", commit1, commit2, *other_commits) { |_stdin, stdout, _wait_thr| stdout.read.rstrip }
     end
   end
