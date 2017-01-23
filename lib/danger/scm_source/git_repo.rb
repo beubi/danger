@@ -14,8 +14,8 @@ module Danger
       puts("from: #{from}")
       puts("to: #{to}")
       
-      ensure_commitish_exists!(from, repo)
-      ensure_commitish_exists!(to, repo)
+      ensure_commitish_exists!(from)
+      ensure_commitish_exists!(to)
 
       merge_base = find_merge_base(repo, from, to)
 
@@ -43,8 +43,8 @@ module Danger
       exec("remote show origin -n").lines.grep(/Fetch URL/)[0].split(": ", 2)[1].chomp
     end
 
-    def ensure_commitish_exists!(commitish, repo)
-      git_shallow_fetch(repo) if commit_not_exists?(commitish)
+    def ensure_commitish_exists!(commitish)
+      git_shallow_fetch if commit_not_exists?(commitish)
 
       if commit_not_exists?(commitish)
         raise_if_we_cannot_find_the_commit(commitish)
@@ -53,8 +53,8 @@ module Danger
 
     private
 
-    def git_shallow_fetch(repo)
-      exec("fetch #{repo}") # before was fetch --unshallow
+    def git_shallow_fetch
+      exec("fetch --tags --progress https://${GIT_USERNAME}:${GIT_PASSWORD}@bitbucket.org/" + repofullname + '.git +refs/heads/' + branchName + ':refs/remotes/origin/' + branchName) # before was fetch --unshallow
     end
 
     def default_env
@@ -77,7 +77,7 @@ module Danger
       possible_merge_base = possible_merge_base(repo, from, to)
       
       unless possible_merge_base
-        git_shallow_fetch(repo)
+        git_shallow_fetch
         possible_merge_base = possible_merge_base(repo, from, to)
       end
 
