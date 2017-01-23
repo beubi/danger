@@ -10,8 +10,8 @@ module Danger
       self.folder = folder
       repo = Git.open self.folder
 
-      ensure_commitish_exists!(from)
-      ensure_commitish_exists!(to)
+      ensure_commitish_exists!(from, repo)
+      ensure_commitish_exists!(to, repo)
 
       merge_base = find_merge_base(repo, from, to)
 
@@ -37,7 +37,7 @@ module Danger
     end
 
     def ensure_commitish_exists!(commitish)
-      git_in_depth_fetch if commit_not_exists?(commitish)
+      git_shallow_fetch(repo) if commit_not_exists?(commitish)
 
       if commit_not_exists?(commitish)
         raise_if_we_cannot_find_the_commit(commitish)
@@ -46,8 +46,8 @@ module Danger
 
     private
 
-    def git_in_depth_fetch
-      exec("fetch --depth 1000000")
+    def git_shallow_fetch(repo)
+      exec("fetch https://${DANGER_BITBUCKETCLOUD_USERNAME}:${DANGER_BITBUCKETCLOUD_PASSWORD}@bitbucket.org/#{repo}.git refs/heads/develop:refs/remotes/origin/develop") # before was 'fetch --unshallow'
     end
 
     def default_env
@@ -70,7 +70,7 @@ module Danger
       possible_merge_base = possible_merge_base(repo, from, to)
 
       unless possible_merge_base
-        git_in_depth_fetch
+        git_shallow_fetch(repo)
         possible_merge_base = possible_merge_base(repo, from, to)
       end
 
