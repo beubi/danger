@@ -49,16 +49,14 @@ module Danger
         head_commit = self.pr_json[:source][:commit][:hash]
         
         repo = self.pr_json[:destination][:repository][:full_name]
-        from = self.pr_json[:source][:branch][:name]
-        to = self.pr_json[:destination][:branch][:name]
         
         # Next, we want to ensure that we have a version of the current branch at a known location
-        puts scm.ensure_commitish_exists!(base_commit, repo, from, to)
+        puts scm.ensure_commitish_exists!(base_commit, repo)
         self.scm.exec "branch #{EnvironmentManager.danger_base_branch} #{base_commit}"
 
         # OK, so we want to ensure that we have a known head branch, this will always represent
         # the head of the PR ( e.g. the most recent commit that will be merged. )
-        puts scm.ensure_commitish_exists!(head_commit, repo, from, to)
+        puts scm.ensure_commitish_exists!(head_commit, repo)
         self.scm.exec "branch #{EnvironmentManager.danger_head_branch} #{head_commit}"
       end
 
