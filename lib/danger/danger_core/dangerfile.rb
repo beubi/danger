@@ -246,6 +246,7 @@ module Danger
 
       if violations[:errors].empty? && violations[:warnings].empty? && violations[:messages].empty?
         puts "There are no ERRORs, WARNs or MESSAGEs to show."
+        env.request_source.delete_old_comments(danger_id: danger_id)
         return nil
       end
       puts "Updating..."
