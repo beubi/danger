@@ -48,9 +48,9 @@ module Danger
         base_commit = self.pr_json[:destination][:commit][:hash]
         head_commit = self.pr_json[:source][:commit][:hash]
         
-        repo = self.pr_json[:destination][:repository][:fullname]
-        from = self.pr_json[:destination][:branch][:name]
-        to = self.pr_json[:source][:branch][:name]
+        repo = self.pr_json[:destination][:repository][:full_name]
+        from = self.pr_json[:source][:branch][:name]
+        to = self.pr_json[:destination][:branch][:name]
         
         # Next, we want to ensure that we have a version of the current branch at a known location
         puts scm.ensure_commitish_exists!(base_commit, repo, from, to)
