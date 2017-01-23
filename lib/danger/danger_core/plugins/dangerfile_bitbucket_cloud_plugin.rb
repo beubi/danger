@@ -96,7 +96,7 @@ module Danger
     # @return [String]
     #
     def pr_author
-      @bs.pr_json[:author][:user][:slug].to_s
+      @bs.pr_json[:author][:display_name].to_s
     end
 
     # @!group PR Commit Metadata
@@ -104,7 +104,7 @@ module Danger
     # @return [String]
     #
     def branch_for_base
-      @bs.pr_json[:toRef][:displayId].to_s
+      @bs.pr_json[:destination][:branch][:name].to_s
     end
 
     # @!group PR Commit Metadata
@@ -120,7 +120,7 @@ module Danger
     # @return [String]
     #
     def branch_for_head
-      @bs.pr_json[:fromRef][:displayId].to_s
+      @bs.pr_json[:source][:branch][:name].to_s
     end
 
     # @!group PR Commit Metadata
@@ -128,7 +128,7 @@ module Danger
     # @return [String]
     #
     def base_commit
-      @bs.pr_json[:toRef][:latestCommit].to_s
+      @bs.pr_json[:destination][:commit][:hash].to_s
     end
 
     # @!group PR Commit Metadata
@@ -136,7 +136,7 @@ module Danger
     # @return [String]
     #
     def head_commit
-      @bs.pr_json[:fromRef][:latestCommit].to_s
+      @bs.pr_json[:source][:commit][:hash].to_s
     end
 
     # @!group Bitbucket Cloud Misc
