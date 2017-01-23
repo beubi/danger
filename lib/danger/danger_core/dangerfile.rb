@@ -245,9 +245,10 @@ module Danger
       violations = violation_report
 
       if violations[:errors].empty? && violations[:warnings].empty? && violations[:messages].empty?
+        puts "There are no ERRORs, WARNs or MESSAGEs to show."
         return nil
       end
-      
+      puts "Updating..."
       env.request_source.update_pull_request!(
         warnings: violations[:warnings],
         errors: violations[:errors],
