@@ -49,8 +49,11 @@ module Danger
 
     private
 
-    def git_shallow_fetch
-      exec("fetch origin/develop") # before was fetch --unshallow
+    def git_shallow_fetch(repo, from, to)
+      puts "repo: #{repo}"
+      puts "from: #{from}"
+      puts "to: #{to}"
+      exec("fetch #{repo}") # before was fetch --unshallow
     end
 
     def default_env
