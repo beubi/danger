@@ -52,8 +52,7 @@ module Danger
     private
 
     def git_shallow_fetch (repo, from, to)
-      exec("status")
-      exec("fetch --tags --progress https://${DANGER_BITBUCKETCLOUD_USERNAME}:${DANGER_BITBUCKETCLOUD_PASSWORD}@bitbucket.org/#{repo}.git refs/heads/#{from}:refs/remotes/origin/#{to}") # before was 'fetch --unshallow'
+      exec("fetch --progress https://${DANGER_BITBUCKETCLOUD_USERNAME}:${DANGER_BITBUCKETCLOUD_PASSWORD}@bitbucket.org/#{repo}.git refs/heads/develop:refs/remotes/origin/develop") # before was 'fetch --unshallow'
     end
 
     def default_env
